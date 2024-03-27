@@ -1,7 +1,9 @@
 import {
   Anchor,
   Button,
+  CustomCircle,
   H1,
+  MyComponent,
   Paragraph,
   Separator,
   Sheet,
@@ -9,13 +11,14 @@ import {
   XStack,
   YStack,
 } from '@my/ui'
+import { NativeToast } from '@my/ui/src/NativeToast'
 import { ChevronDown, ChevronUp } from '@tamagui/lucide-icons'
 import { useState } from 'react'
 import { useLink } from 'solito/link'
 
 export function HomeScreen() {
   const linkProps = useLink({
-    href: '/user/nate',
+    href: '/user/favour',
   })
 
   return (
@@ -47,6 +50,7 @@ export function HomeScreen() {
 
       <XStack>
         <Button {...linkProps}>Link to user</Button>
+        <MyComponent />
       </XStack>
 
       <SheetDemo />
@@ -80,6 +84,8 @@ function SheetDemo() {
         <Sheet.Overlay animation="lazy" enterStyle={{ opacity: 0 }} exitStyle={{ opacity: 0 }} />
         <Sheet.Frame ai="center" jc="center">
           <Sheet.Handle />
+          <CustomCircle size={'$16'} />
+          <CustomCircle size={'$16'} />
           <Button
             size="$6"
             circular

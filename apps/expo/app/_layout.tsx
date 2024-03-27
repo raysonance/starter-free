@@ -10,12 +10,14 @@ export default function HomeLayout() {
     InterBold: require('@tamagui/font-inter/otf/Inter-Bold.otf'),
   })
   const scheme = useColorScheme()
-
+console.log(scheme)
   if (!loaded) {
     return null
   }
   return (
+
     <Provider>
+
       <ThemeProvider value={scheme === 'dark' ? DarkTheme : DefaultTheme}>
         <Stack />
       </ThemeProvider>
