@@ -30,7 +30,7 @@ function MyApp({ Component, pageProps }: SolitoAppProps) {
 
 function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useRootTheme()
-
+  console.log(theme)
   return (
     <NextThemeProvider
       onChangeTheme={(next) => {

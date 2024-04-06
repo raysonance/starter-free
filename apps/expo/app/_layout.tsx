@@ -10,16 +10,16 @@ export default function HomeLayout() {
     InterBold: require('@tamagui/font-inter/otf/Inter-Bold.otf'),
   })
   const scheme = useColorScheme()
-console.log(scheme)
+  console.log(scheme)
   if (!loaded) {
     return null
   }
   return (
-
     <Provider>
-
       <ThemeProvider value={scheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <Stack />
+        <Stack>
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        </Stack>
       </ThemeProvider>
     </Provider>
   )

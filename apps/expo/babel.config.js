@@ -24,7 +24,7 @@ module.exports = function (api) {
             [
               '@tamagui/babel-plugin',
               {
-                components: ['@my/ui', 'tamagui'],
+                components: ['@my/ui', 'tamagui', 'react-native-google-places-autocomplete/GooglePlacesAutocomplete'],
                 config: '../../packages/config/src/tamagui.config.ts',
               },
             ],
