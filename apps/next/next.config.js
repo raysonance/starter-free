@@ -66,7 +66,8 @@ module.exports = function () {
       'expo-linking',
       'expo-constants',
       'expo-modules-core',
-      'react-native-google-places-autocomplete'
+      'react-native-google-places-autocomplete',
+      'rn-placeholder'
     ],
     experimental: {
       scrollRestoration: true,

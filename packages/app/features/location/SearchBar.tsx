@@ -1,8 +1,8 @@
 import React, { useRef } from 'react'
-import { TouchableOpacity } from 'react-native'
+import { TouchableOpacity, useColorScheme } from 'react-native'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
 import { XCircle, Compass, X } from '@tamagui/lucide-icons'
-import { View } from 'tamagui'
+import { View, useTheme } from 'tamagui'
 
 export const SearchBar = ({ cityHandler, regionHandler }) => {
   const onPress = (data, details) => {
@@ -13,10 +13,13 @@ export const SearchBar = ({ cityHandler, regionHandler }) => {
     regionHandler({
       latitude: details.geometry.location.lat,
       longitude: details.geometry.location.lng,
-      latitudeDelta: 0.9,
-      longitudeDelta: 0.9,
     })
   }
+  const theme = useTheme()
+
+  // on the web this is something like var(--background) and will avoid re-renders
+  // on native it will be something like #fff and will re-render
+
   const ref = useRef(null)
 
   const clear = () => {
@@ -40,6 +43,10 @@ export const SearchBar = ({ cityHandler, regionHandler }) => {
       query={{ key: 'AIzaSyDPs-fJP4s8GJGqAhca0q07cYBaM7PKTjs' }}
       onPress={onPress}
       placeholder="Search"
+      textInputProps={{
+        placeholderTextColor: 'gray',
+        returnKeyType: 'search',
+      }}
       styles={{
         textInput: {
           backgroundColor: 'transparent',
@@ -47,8 +54,9 @@ export const SearchBar = ({ cityHandler, regionHandler }) => {
           fontWeight: '700',
           marginTop: 7,
         },
+
         textInputContainer: {
-          backgroundColor: 'transparent',
+          backgroundColor: theme.backgroundFocus.val,
           padding: 12,
           width: '100%',
           borderRadius: 20,
