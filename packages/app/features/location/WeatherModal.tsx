@@ -31,7 +31,7 @@ export function WeatherModal(props: Props) {
              <Paragraph size={'$1'} color={'$gray10Light'}>
               {formatDate(weather?.date, '1')}
             </Paragraph>
-             <Paragraph size={'$10'}>{weather?.day.avgtemp_c}°C</Paragraph>
+             <Paragraph size={'$9'}>{weather?.day.avgtemp_c}°C</Paragraph>
              <Paragraph $sm={{size: '$2' }}>{weather?.day.condition.text}</Paragraph>
             {/*  <Paragraph $sm={{size: '$2' }}>
               Feels like  <Paragraph $sm={{size: '$2' }} fow={'700'}> {weather?.day.feelslike_c}°C</Paragraph>
@@ -39,9 +39,8 @@ export function WeatherModal(props: Props) {
           </YStack>
           <YStack>
             <Image
-              ml={'$2'}
               source={{
-                width: 200,
+                width: 150,
                 height: 150,
                 uri: 'https:' + `${weather?.day.condition.icon}`,
               }}
