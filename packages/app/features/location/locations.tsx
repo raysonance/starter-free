@@ -1,9 +1,7 @@
-import { Button, Card, Image, Paragraph, Spinner, View, XStack, YStack } from '@my/ui'
+import { Button, Card, Image, Paragraph, SearchBar, Spinner, View, XStack, YStack } from '@my/ui'
 import { ChevronLeft, LocateFixed, Plus } from '@tamagui/lucide-icons'
 import React, { useEffect, useState } from 'react'
-import { createParam } from 'solito'
 import { useLink } from 'solito/link'
-import { SearchBar } from './SearchBar'
 import { FlatList, useColorScheme } from 'react-native'
 import { fetchWeather } from '../apis/LocationCardApi'
 import { Placeholder, PlaceholderMedia, PlaceholderLine, Fade } from 'rn-placeholder'
@@ -24,20 +22,8 @@ export function LocationScreen() {
   // })
 
   const linkLocation = useLink({
-    href: `/location/${region?.latitude}-${region?.longitude}`,
+    href: `/location/${region?.latitude},${region?.longitude}`,
   })
-
-  const { data: weather, isLoading } = fetchWeather('48.8567', '2.3508')
-
-  console.log(weather)
-
-  useEffect(() => {
-    if (region) {
-      // useLink({
-      //   href: `/location/${region?.latitude}-${region?.longitude}`,
-      // })
-    }
-  }, [region])
 
   return (
     <View f={1} width={'100%'}>

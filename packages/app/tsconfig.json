@@ -1,6 +1,6 @@
 {
   "extends": "../../tsconfig.base",
-  "include": ["**/*.ts", "**/*.tsx"],
+  "include": ["**/*.ts", "**/*.tsx", "../ui/src/SearchBar.tsx"],
   "compilerOptions": {
     "composite": true,
     "jsx": "react-jsx"

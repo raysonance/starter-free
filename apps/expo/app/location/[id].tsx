@@ -1,5 +1,6 @@
 import { LocationDetailScreen } from 'app/features/location/location-detail'
 import { Stack } from 'expo-router'
+import { SafeAreaView } from 'react-native-safe-area-context'
 import { createParam } from 'solito'
 
 export default function Screen() {
@@ -7,10 +8,12 @@ export default function Screen() {
     <>
       <Stack.Screen
         options={{
-          title: `Location`,
+          headerShown: false,
         }}
       />
-      <LocationDetailScreen />
+      <SafeAreaView style={{flex: 1}}>
+        <LocationDetailScreen />
+      </SafeAreaView>
     </>
   )
 }

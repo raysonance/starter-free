@@ -1,6 +1,6 @@
 {
   "extends": "../../tsconfig.base",
-  "include": ["**/*.ts", "**/*.tsx", "../config/src/tamagui.config.ts", "../app/features/location/SearchBar.tsx"],
+  "include": ["**/*.ts", "**/*.tsx", "../config/src/tamagui.config.ts", "src/SearchBar.tsx"],
   "compilerOptions": {
     "composite": true,
     "jsx": "react-jsx"
