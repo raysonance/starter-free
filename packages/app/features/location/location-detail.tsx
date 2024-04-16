@@ -7,6 +7,7 @@ import Hourly from './Hourly'
 import { CustomHeader } from '@my/ui'
 import WeatherCard from './WeatherCard'
 import { Daily } from './Daily'
+import { ScrollView } from 'react-native'
 
 const { useParam } = createParam<{ id: string }>()
 
@@ -23,11 +24,14 @@ export function LocationDetailScreen() {
     return <FullScreenLoading />
   }
   return (
-    <View f={1} width={'100%'}>
+    <ScrollView style={{ flex: 1, width: '100%' }}>
       <CustomHeader t={weather?.location.region} r="Add" />
       <WeatherCard weather={weather} />
-      <Hourly weather={weather} />
+      <Hourly
+        weather={weather?.forecast.forecastday[0].hour}
+        astro={weather?.forecast.forecastday[0].astro}
+      />
       <Daily weather={weather} />
-    </View>
+    </ScrollView>
   )
 }

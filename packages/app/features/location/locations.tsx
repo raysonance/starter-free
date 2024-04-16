@@ -5,6 +5,7 @@ import { useLink } from 'solito/link'
 import { FlatList, useColorScheme } from 'react-native'
 import { fetchWeather } from '../apis/LocationCardApi'
 import { Placeholder, PlaceholderMedia, PlaceholderLine, Fade } from 'rn-placeholder'
+import { DialogDemo } from './WeatherDialog'
 
 type CoordinateType = {
   latitude: number

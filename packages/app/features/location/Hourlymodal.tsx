@@ -10,17 +10,20 @@ export function formatDate(dateString: string | undefined, daily?: string): stri
   }
   return ''
 }
-type Props = { weather?: WeatherData }
-export function WeatherCard(props: Props) {
-  const { weather } = props
-  console.log(weather?.current.feelslike_c, 'lll')
+type Props = {
+  weather?: WeatherData['forecast']['forecastday'][0]['hour'][0] | undefined
+  astro?: WeatherData['forecast']['forecastday'][0]['astro']
+}
+export function HourlyCard(props: Props) {
+  const { weather, astro } = props
+  console.log(astro?.moon_illumination, 'lll')
   return (
     <YStack>
       <Card
         size={'$7'}
         mt={'$4'}
         $platform-web={{ width: '70%' }}
-        $sm={{ width: '90%' }}
+        $sm={{ width: '100%' }}
         als={'center'}
         py={'$3'}
         // bc={'$blue5Light'}
@@ -29,12 +32,16 @@ export function WeatherCard(props: Props) {
         <XStack jc={'space-between'} ac="center" ml={'$4'}>
           <YStack gap={'$3'} $platform-web={{ gap: '$3' }}>
             <Paragraph size={'$1'} color={'$gray10Light'}>
-              {formatDate(weather?.location.localtime)}
+              {formatDate(weather?.time)}
             </Paragraph>
-            <Paragraph size={'$9'}>{weather?.current.temp_c}°C</Paragraph>
-            <Paragraph>{weather?.current.condition.text}</Paragraph>
-            <Paragraph size={'$2'}>
-              Feels like <Paragraph fow={'600'}> {weather?.current.feelslike_c}°C</Paragraph>
+            <Paragraph size={'$9'}>{weather?.temp_c}°C</Paragraph>
+            <Paragraph>{weather?.condition.text}</Paragraph>
+            <Paragraph $sm={{ size: '$2' }}>
+              Feels like{' '}
+              <Paragraph $sm={{ size: '$2' }} fow={'700'}>
+                {' '}
+                {weather?.feelslike_c}°C
+              </Paragraph>
             </Paragraph>
           </YStack>
           <YStack>
@@ -42,28 +49,23 @@ export function WeatherCard(props: Props) {
               source={{
                 width: 150,
                 height: 150,
-                uri: 'https:' + `${weather?.current.condition.icon}`,
+                uri: 'https:' + `${weather?.condition.icon}`,
               }}
               resizeMode="cover"
             />
           </YStack>
         </XStack>
-        <Astro
-          sunrise={weather?.forecast.forecastday[0].astro.sunrise}
-          sunset={weather?.forecast.forecastday[0].astro.sunset}
-          moon_phase={weather?.forecast.forecastday[0].astro.moon_phase}
-        />
+        <Astro sunrise={astro?.sunrise} sunset={astro?.sunset} moon_phase={astro?.moon_phase} />
         <SecondRow
-          max={weather?.forecast.forecastday[0].day.maxtemp_c}
-          min={weather?.forecast.forecastday[0].day.mintemp_c}
-          uv={weather?.current.uv}
-          pressure={weather?.current.pressure_mb}
+          illumination={astro?.moon_illumination}
+          uv={weather?.uv}
+          pressure={weather?.pressure_mb}
         />
         <ThirdRow
-          precipitation={weather?.forecast.forecastday[0].day.daily_chance_of_rain}
-          humidity={weather?.current.humidity}
-          wind={weather?.current.wind_mph}
-          winddir={weather?.current.wind_dir}
+          precipitation={weather?.chance_of_rain}
+          humidity={weather?.humidity}
+          wind={weather?.wind_mph}
+          winddir={weather?.wind_dir}
         />
       </Card>
     </YStack>
@@ -81,30 +83,37 @@ const Astro = (props: AstroProps) => {
   return (
     <XStack jc={'space-between'} ac="center" m={'$4'}>
       <YStack ai={'center'} jc={'center'}>
-        <Paragraph $sm={{size: '$2' }} color={'$gray10Light'}>Sunrise</Paragraph>
-        <Paragraph $sm={{size: '$2' }}>{sunrise}</Paragraph>
+        <Paragraph $sm={{ size: '$2' }} color={'$gray10Light'}>
+          Sunrise
+        </Paragraph>
+        <Paragraph $sm={{ size: '$2' }}>
+          {sunrise}
+        </Paragraph>
       </YStack>
       <YStack ai={'center'} jc={'center'}>
-        <Paragraph $sm={{size: '$2' }} color={'$gray10Light'}>Moon Phase</Paragraph>
-        <Paragraph $sm={{size: '$2' }}>{moon_phase}</Paragraph>
+        <Paragraph $sm={{ size: '$2' }} color={'$gray10Light'}>
+          Moon Phase
+        </Paragraph>
+        <Paragraph $sm={{ size: '$2' }}>{moon_phase}</Paragraph>
       </YStack>
       <YStack ai={'center'} jc={'center'}>
-        <Paragraph $sm={{size: '$2' }} color={'$gray10Light'}>Sunset</Paragraph>
-        <Paragraph $sm={{size: '$2' }}>{sunset}</Paragraph>
+        <Paragraph $sm={{ size: '$2' }} color={'$gray10Light'}>
+          Sunset
+        </Paragraph>
+        <Paragraph $sm={{ size: '$2' }}>{sunset}</Paragraph>
       </YStack>
     </XStack>
   )
 }
 
 type SecondProps = {
-  max?: number
-  min?: number
+  illumination?: number
   uv?: number
   pressure?: number
 }
 
 const SecondRow = (props: SecondProps) => {
-  const { max, min, uv, pressure } = props
+  const { illumination, uv, pressure } = props
   const [size, setSize] = useState(1)
   const [color, setColor] = useState('$gray10Dark')
   const [progress, setProgress] = useState(0)
@@ -131,25 +140,33 @@ const SecondRow = (props: SecondProps) => {
   return (
     <XStack jc={'space-between'} ac="center" m={'$4'}>
       <YStack ai={'center'} jc={'center'}>
-        <Paragraph $sm={{size: '$2' }} color={'$gray10Light'}>t° max, min</Paragraph>
-        <Paragraph $sm={{size: '$2' }}>
-          <Paragraph color={'$gray10Light'}>↑</Paragraph>
-          {max}°<Paragraph color={'$gray10Light'}>↓</Paragraph>
-          {min}°
+        <Paragraph $sm={{ size: '$2' }} color={'$gray10Light'}>
+          Moon
         </Paragraph>
+        <Paragraph $sm={{ size: '$2' }} color={'$gray10Light'}>
+          Illumination
+        </Paragraph>
+        <Paragraph $sm={{ size: '$2' }}>{illumination}</Paragraph>
       </YStack>
       <YStack ai={'center'} jc={'center'}>
-        <Paragraph $sm={{size: '$2' }} color={'$gray10Light'}>UV index</Paragraph>
+        <Paragraph $sm={{ size: '$2' }} color={'$gray10Light'}>
+          UV index
+        </Paragraph>
         <Progress size={sizeProp} value={progress}>
           <Progress.Indicator animation="bouncy" bc={colorProp} />
         </Progress>
-        <Paragraph>{uv}</Paragraph>
+        <Paragraph $sm={{ size: '$2' }}>{uv}</Paragraph>
       </YStack>
-      <YStack  ai={'center'} jc={'center'}>
-        <Paragraph $sm={{size: '$2' }} color={'$gray10Light'}>Pressure</Paragraph>
-        <Paragraph $sm={{size: '$2' }}>
+      <YStack ai={'center'} jc={'center'}>
+        <Paragraph $sm={{ size: '$2' }} color={'$gray10Light'}>
+          Pressure
+        </Paragraph>
+        <Paragraph $sm={{ size: '$2' }}>
           {pressure}
-          <Paragraph color={'$gray10Light'}> mmHg</Paragraph>
+          <Paragraph $sm={{ size: '$2' }} color={'$gray10Light'}>
+            {' '}
+            mmHg
+          </Paragraph>
         </Paragraph>
       </YStack>
     </XStack>
@@ -168,16 +185,22 @@ const ThirdRow = (props: ThirdProps) => {
   return (
     <XStack jc={'space-between'} ac="center" m={'$4'}>
       <YStack ai={'center'} jc={'center'}>
-        <Paragraph $sm={{size: '$2' }} color={'$gray10Light'}>Precipprob</Paragraph>
-        <Paragraph $sm={{size: '$2' }}>{precipitation}%</Paragraph>
+        <Paragraph $sm={{ size: '$2' }} color={'$gray10Light'}>
+          Precipprob
+        </Paragraph>
+        <Paragraph $sm={{ size: '$2' }}>{precipitation}%</Paragraph>
       </YStack>
       <YStack ai={'center'} jc={'center'}>
-        <Paragraph $sm={{size: '$2' }} color={'$gray10Light'}>Humidity</Paragraph>
-        <Paragraph $sm={{size: '$2' }}>{humidity}%</Paragraph>
+        <Paragraph $sm={{ size: '$2' }} color={'$gray10Light'}>
+          Humidity
+        </Paragraph>
+        <Paragraph $sm={{ size: '$2' }}>{humidity}%</Paragraph>
       </YStack>
       <YStack ai={'center'} jc={'center'}>
-        <Paragraph $sm={{size: '$2' }} color={'$gray10Light'}>Wind</Paragraph>
-        <Paragraph $sm={{size: '$2' }}>
+        <Paragraph $sm={{ size: '$2' }} color={'$gray10Light'}>
+          Wind
+        </Paragraph>
+        <Paragraph $sm={{ size: '$2' }}>
           {wind} m/h {winddir}
         </Paragraph>
       </YStack>
@@ -185,7 +208,7 @@ const ThirdRow = (props: ThirdProps) => {
   )
 }
 
-export default WeatherCard
+export default HourlyCard
 
 export interface WeatherData {
   location: {

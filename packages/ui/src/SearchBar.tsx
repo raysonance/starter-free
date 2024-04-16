@@ -16,6 +16,7 @@ export const SearchBar = ({ cityHandler, regionHandler }) => {
     })
   }
   const theme = useTheme()
+  const scheme = useColorScheme()
 
   // on the web this is something like var(--background) and will avoid re-renders
   // on native it will be something like #fff and will re-render
@@ -49,6 +50,7 @@ export const SearchBar = ({ cityHandler, regionHandler }) => {
       }}
       styles={{
         textInput: {
+          color: scheme == 'dark' ? 'white' : 'black',
           backgroundColor: 'transparent',
           borderRadius: 20,
           fontWeight: '700',
@@ -57,7 +59,7 @@ export const SearchBar = ({ cityHandler, regionHandler }) => {
 
         textInputContainer: {
           backgroundColor: theme.backgroundFocus.val,
-          padding: 12,
+          padding: 8,
           width: '100%',
           borderRadius: 20,
           flexDirection: 'row',

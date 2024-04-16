@@ -2,6 +2,7 @@ import { Image, Paragraph, View, XStack, YStack } from '@my/ui'
 import React from 'react'
 import { WeatherData } from '../apis/LocationCardApi'
 import { FlatList } from 'react-native'
+import { HourlyDemo } from './HourlyDialog'
 // import { router } from 'expo-router';
 
 interface renderProps {
@@ -9,18 +10,21 @@ interface renderProps {
   index: number
 }
 
-type Props = { weather?: WeatherData }
+type Props = {
+  weather?: WeatherData['forecast']['forecastday'][0]['hour']
+  astro?: WeatherData['forecast']['forecastday'][0]['astro']
+}
 export function Hourly(props: Props) {
-  const { weather } = props
+  const { weather, astro } = props
 
   const renderItem = ({ item, index }: renderProps) => {
-    return <HourlyComponent hour={item} />
+    return <HourlyDemo hour={item} astro={astro} />
   }
 
   return (
-    <XStack jc={'space-between'}  my={'$5'}>
+    <XStack jc={'space-between'} my={'$5'}>
       <FlatList
-        data={weather?.forecast.forecastday[0].hour}
+        data={weather}
         horizontal
         showsHorizontalScrollIndicator={false}
         renderItem={renderItem}
@@ -30,13 +34,16 @@ export function Hourly(props: Props) {
   )
 }
 
-type HourlyProps = { hour: WeatherData['forecast']['forecastday'][0]['hour'][0] | undefined }
+type HourlyProps = {
+  hour: WeatherData['forecast']['forecastday'][0]['hour'][0] | undefined
+  onPress?: () => {}
+}
 
-const HourlyComponent = (props: HourlyProps) => {
-  const { hour } = props
+export const HourlyComponent = (props: HourlyProps) => {
+  const { hour, onPress } = props
   return (
-    <YStack ai={'center'} jc={'center'} mx={'$4'}>
-      <YStack bc={'$backgroundFocus'}  br={'$6'} ai={'center'} jc={'center'}>
+    <YStack ai={'center'} jc={'center'} mx={'$4'} onPress={onPress}>
+      <YStack bc={'$backgroundFocus'} br={'$6'} ai={'center'} jc={'center'}>
         <Image
           source={{
             width: 90,
