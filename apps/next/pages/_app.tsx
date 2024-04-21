@@ -6,14 +6,24 @@ import 'raf/polyfill'
 import { NextThemeProvider, useRootTheme } from '@tamagui/next-theme'
 import { Provider } from 'app/provider'
 import Head from 'next/head'
-import React from 'react'
+import React, { useEffect } from 'react'
 import type { SolitoAppProps } from 'solito'
+import { initializeStorage } from 'app/utils/storage'
 
 if (process.env.NODE_ENV === 'production') {
   require('../public/tamagui.css')
 }
 
 function MyApp({ Component, pageProps }: SolitoAppProps) {
+  useEffect(() => {
+    const isWindowAvailable = typeof window !== 'undefined'
+
+    if (isWindowAvailable) {
+      initializeStorage()
+      console.log('feather')
+    }
+  }, [])
+
   return (
     <>
       <Head>
@@ -30,7 +40,7 @@ function MyApp({ Component, pageProps }: SolitoAppProps) {
 
 function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useRootTheme()
-  console.log(theme)
+
   return (
     <NextThemeProvider
       onChangeTheme={(next) => {

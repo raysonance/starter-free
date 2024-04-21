@@ -3,20 +3,13 @@ import {
   Adapt,
   Button,
   Dialog,
-  Fieldset,
-  Input,
-  Label,
-  Paragraph,
   Sheet,
-  TooltipSimple,
   Unspaced,
   XStack,
 } from 'tamagui'
-import WeatherModal from './WeatherModal'
 import React from 'react'
-import DailyComponent from './Daily'
 import { WeatherData } from './WeatherCard'
-import Hourly, { HourlyComponent } from './Hourly'
+import { HourlyComponent } from './Hourly'
 import HourlyCard from './Hourlymodal'
 
 export function HourlyDemo(props: HourlyProps) {

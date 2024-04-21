@@ -1,5 +1,5 @@
 module.exports = function (api) {
-  api.cache(true);
+  api.cache(true)
   return {
     presets: [['babel-preset-expo', { jsxRuntime: 'automatic' }]],
     plugins: [
@@ -17,18 +17,20 @@ module.exports = function (api) {
         },
       ],
       // if you want reanimated support
-      // 'react-native-reanimated/plugin',
+      'react-native-reanimated/plugin',
+      '@babel/plugin-proposal-export-namespace-from',
+
       ...(process.env.EAS_BUILD_PLATFORM === 'android'
         ? []
         : [
             [
               '@tamagui/babel-plugin',
               {
-                components: ['@my/ui', 'tamagui', 'react-native-google-places-autocomplete/GooglePlacesAutocomplete'],
+                components: ['@my/ui', 'tamagui'],
                 config: '../../packages/config/src/tamagui.config.ts',
               },
             ],
           ]),
     ],
-  };
-};
+  }
+}

@@ -1,11 +1,14 @@
 import { Card, ColorTokens, Image, Paragraph, Progress, SizeTokens, XStack, YStack } from '@my/ui'
 import React, { useEffect, useState } from 'react'
-import { format, parseISO } from 'date-fns'
+import { format, parse } from 'date-fns'
 
 export function formatDate(dateString: string | undefined, daily?: string): string {
   if (dateString) {
-    const date = parseISO(dateString)
-    const value = !daily ? format(date, 'EEE, dd MMMM, HH:mm') : format(date, 'EEE, dd MMMM')
+    const dateFormat = 'yyyy-MM-dd H:mm'
+    const parsedDate = parse(dateString, dateFormat, new Date())
+    const value = !daily
+      ? format(parsedDate, 'EEE, dd MMMM, HH:mm')
+      : format(parsedDate, 'EEE, dd MMMM')
     return value
   }
   return ''
@@ -13,7 +16,9 @@ export function formatDate(dateString: string | undefined, daily?: string): stri
 type Props = { weather?: WeatherData }
 export function WeatherCard(props: Props) {
   const { weather } = props
-  console.log(weather?.current.feelslike_c, 'lll')
+
+  console.log(weather?.location.localtime, 'time')
+
   return (
     <YStack>
       <Card
@@ -32,12 +37,12 @@ export function WeatherCard(props: Props) {
               {formatDate(weather?.location.localtime)}
             </Paragraph>
             <Paragraph size={'$9'}>{weather?.current.temp_c}°C</Paragraph>
-            <Paragraph>{weather?.current.condition.text}</Paragraph>
+            <Paragraph $sm={{ width: '70%' }}>{weather?.current.condition.text}</Paragraph>
             <Paragraph size={'$2'}>
               Feels like <Paragraph fow={'600'}> {weather?.current.feelslike_c}°C</Paragraph>
             </Paragraph>
           </YStack>
-          <YStack>
+          <YStack ml={'$-5'}>
             <Image
               source={{
                 width: 150,
@@ -81,16 +86,22 @@ const Astro = (props: AstroProps) => {
   return (
     <XStack jc={'space-between'} ac="center" m={'$4'}>
       <YStack ai={'center'} jc={'center'}>
-        <Paragraph $sm={{size: '$2' }} color={'$gray10Light'}>Sunrise</Paragraph>
-        <Paragraph $sm={{size: '$2' }}>{sunrise}</Paragraph>
+        <Paragraph $sm={{ size: '$2' }} color={'$gray10Light'}>
+          Sunrise
+        </Paragraph>
+        <Paragraph $sm={{ size: '$2' }}>{sunrise}</Paragraph>
       </YStack>
       <YStack ai={'center'} jc={'center'}>
-        <Paragraph $sm={{size: '$2' }} color={'$gray10Light'}>Moon Phase</Paragraph>
-        <Paragraph $sm={{size: '$2' }}>{moon_phase}</Paragraph>
+        <Paragraph $sm={{ size: '$2' }} color={'$gray10Light'}>
+          Moon Phase
+        </Paragraph>
+        <Paragraph $sm={{ size: '$2' }}>{moon_phase}</Paragraph>
       </YStack>
       <YStack ai={'center'} jc={'center'}>
-        <Paragraph $sm={{size: '$2' }} color={'$gray10Light'}>Sunset</Paragraph>
-        <Paragraph $sm={{size: '$2' }}>{sunset}</Paragraph>
+        <Paragraph $sm={{ size: '$2' }} color={'$gray10Light'}>
+          Sunset
+        </Paragraph>
+        <Paragraph $sm={{ size: '$2' }}>{sunset}</Paragraph>
       </YStack>
     </XStack>
   )
@@ -131,23 +142,29 @@ const SecondRow = (props: SecondProps) => {
   return (
     <XStack jc={'space-between'} ac="center" m={'$4'}>
       <YStack ai={'center'} jc={'center'}>
-        <Paragraph $sm={{size: '$2' }} color={'$gray10Light'}>t° max, min</Paragraph>
-        <Paragraph $sm={{size: '$2' }}>
+        <Paragraph $sm={{ size: '$2' }} color={'$gray10Light'}>
+          t° max, min
+        </Paragraph>
+        <Paragraph $sm={{ size: '$2' }}>
           <Paragraph color={'$gray10Light'}>↑</Paragraph>
           {max}°<Paragraph color={'$gray10Light'}>↓</Paragraph>
           {min}°
         </Paragraph>
       </YStack>
       <YStack ai={'center'} jc={'center'}>
-        <Paragraph $sm={{size: '$2' }} color={'$gray10Light'}>UV index</Paragraph>
+        <Paragraph $sm={{ size: '$2' }} color={'$gray10Light'}>
+          UV index
+        </Paragraph>
         <Progress size={sizeProp} value={progress}>
           <Progress.Indicator animation="bouncy" bc={colorProp} />
         </Progress>
         <Paragraph>{uv}</Paragraph>
       </YStack>
-      <YStack  ai={'center'} jc={'center'}>
-        <Paragraph $sm={{size: '$2' }} color={'$gray10Light'}>Pressure</Paragraph>
-        <Paragraph $sm={{size: '$2' }}>
+      <YStack ai={'center'} jc={'center'}>
+        <Paragraph $sm={{ size: '$2' }} color={'$gray10Light'}>
+          Pressure
+        </Paragraph>
+        <Paragraph $sm={{ size: '$2' }}>
           {pressure}
           <Paragraph color={'$gray10Light'}> mmHg</Paragraph>
         </Paragraph>
@@ -168,16 +185,22 @@ const ThirdRow = (props: ThirdProps) => {
   return (
     <XStack jc={'space-between'} ac="center" m={'$4'}>
       <YStack ai={'center'} jc={'center'}>
-        <Paragraph $sm={{size: '$2' }} color={'$gray10Light'}>Precipprob</Paragraph>
-        <Paragraph $sm={{size: '$2' }}>{precipitation}%</Paragraph>
+        <Paragraph $sm={{ size: '$2' }} color={'$gray10Light'}>
+          Precipprob
+        </Paragraph>
+        <Paragraph $sm={{ size: '$2' }}>{precipitation}%</Paragraph>
       </YStack>
       <YStack ai={'center'} jc={'center'}>
-        <Paragraph $sm={{size: '$2' }} color={'$gray10Light'}>Humidity</Paragraph>
-        <Paragraph $sm={{size: '$2' }}>{humidity}%</Paragraph>
+        <Paragraph $sm={{ size: '$2' }} color={'$gray10Light'}>
+          Humidity
+        </Paragraph>
+        <Paragraph $sm={{ size: '$2' }}>{humidity}%</Paragraph>
       </YStack>
       <YStack ai={'center'} jc={'center'}>
-        <Paragraph $sm={{size: '$2' }} color={'$gray10Light'}>Wind</Paragraph>
-        <Paragraph $sm={{size: '$2' }}>
+        <Paragraph $sm={{ size: '$2' }} color={'$gray10Light'}>
+          Wind
+        </Paragraph>
+        <Paragraph $sm={{ size: '$2' }}>
           {wind} m/h {winddir}
         </Paragraph>
       </YStack>

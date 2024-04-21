@@ -10,10 +10,21 @@ import {
   onlineManager,
 } from '@tanstack/react-query'
 import { useEffect } from 'react'
+import { ASYNCKEY, initializeStorage, loadValue } from '../utils/storage'
+import useCoordinatesStore from '../utils/store'
 
 export function Provider({ children, ...rest }: Omit<TamaguiProviderProps, 'config'>) {
   const scheme = useColorScheme()
+
   const queryClient = new QueryClient()
+
+
+  const { fetchCoordinates } = useCoordinatesStore()
+
+  useEffect(() => {
+    fetchCoordinates()
+  }, [fetchCoordinates])
+
 
   onlineManager.setEventListener((setOnline) => {
     return NetInfo.addEventListener((state) => {

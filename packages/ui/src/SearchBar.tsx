@@ -82,7 +82,7 @@ export const SearchBar = ({ cityHandler, regionHandler }) => {
       onFail={(error) => console.error(error)}
       renderRightButton={() => (
         <View onPress={() => clear()}>
-          <X size="$3" hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }} />
+          <X size="$3" />
         </View>
       )}
     />

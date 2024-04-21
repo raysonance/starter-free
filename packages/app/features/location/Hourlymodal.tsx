@@ -29,13 +29,13 @@ export function HourlyCard(props: Props) {
         // bc={'$blue5Light'}
         elevate
       >
-        <XStack jc={'space-between'} ac="center" ml={'$4'}>
-          <YStack gap={'$3'} $platform-web={{ gap: '$3' }}>
+        <XStack ml={'$4'} jc={'space-between'} ac="center">
+          <YStack gap={'$2'} $platform-web={{ gap: '$3' }}>
             <Paragraph size={'$1'} color={'$gray10Light'}>
               {formatDate(weather?.time)}
             </Paragraph>
             <Paragraph size={'$9'}>{weather?.temp_c}°C</Paragraph>
-            <Paragraph>{weather?.condition.text}</Paragraph>
+            <Paragraph $sm={{ width: '70%' }}>{weather?.condition.text}</Paragraph>
             <Paragraph $sm={{ size: '$2' }}>
               Feels like{' '}
               <Paragraph $sm={{ size: '$2' }} fow={'700'}>
@@ -44,11 +44,11 @@ export function HourlyCard(props: Props) {
               </Paragraph>
             </Paragraph>
           </YStack>
-          <YStack>
+          <YStack ml={'$-5'}>
             <Image
               source={{
-                width: 150,
-                height: 150,
+                width: 130,
+                height: 130,
                 uri: 'https:' + `${weather?.condition.icon}`,
               }}
               resizeMode="cover"
@@ -86,9 +86,7 @@ const Astro = (props: AstroProps) => {
         <Paragraph $sm={{ size: '$2' }} color={'$gray10Light'}>
           Sunrise
         </Paragraph>
-        <Paragraph $sm={{ size: '$2' }}>
-          {sunrise}
-        </Paragraph>
+        <Paragraph $sm={{ size: '$2' }}>{sunrise}</Paragraph>
       </YStack>
       <YStack ai={'center'} jc={'center'}>
         <Paragraph $sm={{ size: '$2' }} color={'$gray10Light'}>

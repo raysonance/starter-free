@@ -32,12 +32,12 @@ export function WeatherModal(props: Props) {
               {formatDate(weather?.date, '1')}
             </Paragraph>
              <Paragraph size={'$9'}>{weather?.day.avgtemp_c}°C</Paragraph>
-             <Paragraph $sm={{size: '$2' }}>{weather?.day.condition.text}</Paragraph>
+             <Paragraph $sm={{size: '$2', width: '70%' }}>{weather?.day.condition.text}</Paragraph>
             {/*  <Paragraph $sm={{size: '$2' }}>
               Feels like  <Paragraph $sm={{size: '$2' }} fow={'700'}> {weather?.day.feelslike_c}°C</Paragraph>
             </Paragraph> */}
           </YStack>
-          <YStack>
+          <YStack ml={'$-5'}>
             <Image
               source={{
                 width: 150,

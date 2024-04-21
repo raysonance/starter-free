@@ -2,14 +2,25 @@ import { ColorTokens, Image, Paragraph, Progress, SizeTokens, View, XStack, YSta
 import React, { useEffect, useState } from 'react'
 import { WeatherData } from '../apis/LocationCardApi'
 import { FlatList } from 'react-native'
-import { format, parseISO } from 'date-fns'
-import { formatDate } from './WeatherCard'
 import { DialogDemo } from './WeatherDialog'
+import { format, parse } from 'date-fns'
 // import { router } from 'expo-router';
 
 interface renderProps {
   item: WeatherData['forecast']['forecastday'][0] | undefined
   index: number
+}
+
+export function formatDate(dateString: string | undefined, daily?: string): string {
+  if (dateString) {
+const dateFormat = 'yyyy-MM-dd'
+    const parsedDate = parse(dateString, dateFormat, new Date())
+    const value = !daily
+      ? format(parsedDate, 'EEE, dd MMMM, HH:mm')
+      : format(parsedDate, 'EEE, dd MMMM')
+    return value
+  }
+  return ''
 }
 
 type Props = { weather?: WeatherData }

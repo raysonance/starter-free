@@ -54,6 +54,9 @@ module.exports = function () {
     typescript: {
       ignoreBuildErrors: true,
     },
+    react: {
+      suppressHydrationWarning: true,
+    },
     modularizeImports: {
       '@tamagui/lucide-icons': {
         transform: `@tamagui/lucide-icons/dist/esm/icons/{{kebabCase member}}`,
@@ -67,7 +70,7 @@ module.exports = function () {
       'expo-constants',
       'expo-modules-core',
       'react-native-google-places-autocomplete',
-      'rn-placeholder'
+      'react-native-reanimated'
     ],
     experimental: {
       scrollRestoration: true,
