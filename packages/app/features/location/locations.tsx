@@ -196,6 +196,7 @@ function DialogInstance(props: DialogProp) {
           onPress={Delete}
         >
           <MinusCircle
+            color={'red'}
             jc={'center'}
             animation="bouncy"
             hoverStyle={{

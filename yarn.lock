@@ -9452,6 +9452,8 @@ __metadata:
     expo-font: "npm:~11.4.0"
     expo-linear-gradient: "npm:~12.3.0"
     expo-linking: "npm:~5.0.2"
+    expo-location: "npm:^16.5.5"
+    expo-permissions: "npm:^14.4.0"
     expo-router: "npm:^2.0.0"
     expo-splash-screen: "npm:~0.20.5"
     expo-status-bar: "npm:~1.6.0"
@@ -9650,6 +9652,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"expo-location@npm:^16.5.5":
+  version: 16.5.5
+  resolution: "expo-location@npm:16.5.5"
+  peerDependencies:
+    expo: "*"
+  checksum: 10/460c5c16e8c6c1c8035b246e37a9bd7b49dcf180a7ae442984e6e81cf14971a7ec6414c02b2a467f629d4ab3f2a5fcc6681799601b530a081ab6333fe92c4790
+  languageName: node
+  linkType: hard
+
 "expo-manifests@npm:~0.7.0":
   version: 0.7.2
   resolution: "expo-manifests@npm:0.7.2"
@@ -9682,6 +9693,15 @@ __metadata:
     compare-versions: "npm:^3.4.0"
     invariant: "npm:^2.2.4"
   checksum: 10/4c014be4e8c67bfa7f435ecc777271454ede9818c5baa8afa5dc9f960267278cce4b2cd72851484328f1a20db815da1c47a46de4393be8f8500fca2a5be61d97
+  languageName: node
+  linkType: hard
+
+"expo-permissions@npm:^14.4.0":
+  version: 14.4.0
+  resolution: "expo-permissions@npm:14.4.0"
+  peerDependencies:
+    expo: "*"
+  checksum: 10/4fd49093d591dd5e18d52b8c81ec0f86fc2cda6b4adead3c72ce5085b1a0e2c5008eb3f0fca8a72d720525f2dd8eaf2ccf4143c416918108bf310b12aaac2fd2
   languageName: node
   linkType: hard
 

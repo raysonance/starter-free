@@ -70,6 +70,8 @@ module.exports = function () {
       'expo-constants',
       'expo-modules-core',
       'react-native-google-places-autocomplete',
+      'expo-location',
+      'expo-permissions',
       'react-native-reanimated'
     ],
     experimental: {

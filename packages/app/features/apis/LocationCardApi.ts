@@ -6,6 +6,8 @@ const weather = 'https://api.weatherapi.com/v1/forecast.json?'
 const API_KEY = '8e5982075c4243dc831214624240804'
 
 export function fetchWeather(lat: string | undefined, lon: string | undefined) {
+  console.log(lat, lon)
+  console.log(!(lat == '0' && lon == '0'))
   return useQuery<WeatherData, Error>({
     queryKey: ['weather', lat, lon],
     queryFn: async () => {
@@ -18,8 +20,10 @@ export function fetchWeather(lat: string | undefined, lon: string | undefined) {
           },
         }
       )
+
       return data
     },
+    enabled: !(lat == '0' && lon == '0'),
   })
 }
 
