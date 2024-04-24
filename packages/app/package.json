@@ -10,7 +10,7 @@
     "@my/ui": "0.0.1",
     "@tamagui/animations-react-native": "^1.93.2",
     "@tamagui/colors": "^1.93.2",
-    "@tamagui/font-inter": "^1.93.2",
+    "@tamagui/font-inter": "^1.93.3",
     "@tamagui/lucide-icons": "^1.93.2",
     "@tamagui/shorthands": "^1.93.2",
     "@tamagui/themes": "^1.93.2",
