@@ -42,7 +42,14 @@ type HourlyProps = {
 export const HourlyComponent = (props: HourlyProps) => {
   const { hour, onPress } = props
   return (
-    <YStack ai={'center'} jc={'center'} mx={'$4'} onPress={onPress}>
+    <YStack
+      ai={'center'}
+      jc={'center'}
+      m={'$4'}
+      animation={'bouncy'}
+      hoverStyle={{ backgroundColor: '$backgroundFocus', scale: 1.2 }}
+      onPress={onPress}
+    >
       <YStack bc={'$backgroundFocus'} br={'$6'} ai={'center'} jc={'center'}>
         <Image
           source={{

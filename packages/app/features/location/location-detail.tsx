@@ -26,18 +26,29 @@ export function LocationDetailScreen() {
 
   const { data: weather, isLoading } = fetchWeather(id?.split(',')[0], id?.split(',')[1])
 
-
   if (isLoading) {
     return <FullScreenLoading />
   }
 
   //add coordinates
   const Add = async () => {
-    appendCoordinate(id?.split(',')[0], id?.split(',')[1], weather?.location.region)
-
-    toast.show('Location Added!', {
-      message: 'Location has been saved...',
-    })
+    const exist: any = appendCoordinate(
+      id?.split(',')[0],
+      id?.split(',')[1],
+      weather?.location.region
+    )
+    console.log(exist)
+    if (exist === 'exist') {
+      toast.show('Hmm!', {
+        message: `Coordinate with latitude ${id?.split(',')[0]} and longitude ${
+          id?.split(',')[1]
+        } already exists.`, native: 'web'
+      })
+    } else {
+      toast.show('Location Added!', {
+        message: 'Location has been saved...',
+      })
+    }
   }
 
   const renderItem = ({ item, index }: renderProps) => {

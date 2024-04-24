@@ -16,7 +16,7 @@ type Props = {
 }
 export function HourlyCard(props: Props) {
   const { weather, astro } = props
-  console.log(astro?.moon_illumination, 'lll')
+  
   return (
     <YStack>
       <Card

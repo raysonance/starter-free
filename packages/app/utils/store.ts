@@ -1,6 +1,7 @@
 import { create } from 'zustand'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { ASYNCKEY } from './storage'
+import { useToastController } from '@my/ui'
 
 interface Coordinate {
   lat: string
@@ -23,6 +24,7 @@ const KEY = ASYNCKEY
 const useCoordinatesStore = create<CoordinatesState>((set, get) => ({
   coordinates: [],
   fetchCoordinates: async () => {
+   
     try {
       const jsonValue = await AsyncStorage.getItem(KEY)
       if (jsonValue !== null) {
@@ -42,7 +44,7 @@ const useCoordinatesStore = create<CoordinatesState>((set, get) => ({
 
     if (existingCoordinate) {
       console.log(`Coordinate with latitude ${latitude} and longitude ${longitude} already exists.`)
-      return
+      return 'exist'
     }
     if (latitude && longitude && name) {
       const newCoordinates = [...get().coordinates, { lat: latitude, long: longitude, name: name }]

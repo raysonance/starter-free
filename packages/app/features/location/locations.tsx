@@ -1,5 +1,6 @@
 import {
   Adapt,
+  AnimatePresence,
   Button,
   Card,
   CustomHeader,
@@ -19,7 +20,7 @@ import {
   useToastController,
 } from '@my/ui'
 import { Edit3, LocateFixed, MinusCircle, X } from '@tamagui/lucide-icons'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { Link, useLink } from 'solito/link'
 import { FlatList } from 'react-native'
 import { fetchWeather } from '../apis/LocationCardApi'
@@ -40,7 +41,7 @@ export function LocationScreen() {
   const [name, setName] = useState('Edit')
 
   const { coordinates } = useCoordinatesStore()
-  console.log(coordinates)
+
   const linkLocation = useLink({
     href: `/location/${region?.latitude},${region?.longitude}`,
   })
@@ -55,7 +56,7 @@ export function LocationScreen() {
       <CustomHeader t={''} back={false} r={name} onPress={Edit} />
       <XStack
         als="center"
-        $platform-native={{ marginHorizontal: '$3' }}
+        $platform-native={{ marginHorizontal: '$4' }}
         $platform-web={{ maxWidth: '100%' }}
       >
         <SearchBar cityHandler={setCity} regionHandler={setRegion} />
@@ -105,6 +106,11 @@ const LocationCard = (props: Props) => {
   return (
     <Link href={`/location/${lat},${long}`}>
       <Card
+        enterStyle={{
+          opacity: 0,
+          y: -10,
+          scale: 0.9,
+        }}
         animation="bouncy"
         hoverStyle={{
           scale: 1.1,
@@ -165,152 +171,171 @@ function DialogInstance(props: DialogProp) {
 
   const toast = useToastController()
   //add coordinates
-  const Edit = async () => {
+  const Edit = () => {
     renameCoordinate(lat, long, newName)
 
     toast.show('Location Name Changed!', {
       message: 'Location name has been changed...',
     })
   }
-  const Delete = async () => {
+
+  const Delete = () => {
+    console.log(index)
     deleteCoordinate(lat, long)
 
     toast.show('Location Deleted!', {
       message: 'Location has been deleted...',
     })
   }
-
-  console.log(newName)
   return (
-    <Dialog modal>
-      <XStack als={'center'} ai="center" jc={'center'} width={'90%'}>
-        <YStack
-          mr={'$3'}
-          hoverStyle={{
-            scale: 1.3,
-          }}
-          cursor="pointer"
-          pressStyle={{
-            scale: 0.9,
-          }}
-          onPress={Delete}
-        >
-          <MinusCircle
-            color={'red'}
-            jc={'center'}
-            animation="bouncy"
+    <View
+      key={index}
+      animation="bouncy"
+      enterStyle={{
+        opacity: 0,
+        y: 10,
+        scale: 0.9,
+      }}
+      exitStyle={{
+        opacity: 0,
+        x: -40,
+        scale: 0.9,
+      }}
+    >
+      <Dialog modal>
+        <XStack als={'center'} ai="center" jc={'center'} width={'90%'}>
+          <YStack
+            mr={'$3'}
             hoverStyle={{
-              scale: 1.1,
+              scale: 1.3,
             }}
+            cursor="pointer"
             pressStyle={{
               scale: 0.9,
             }}
-          />
-        </YStack>
-        <Card
-          jc={'center'}
-          size={'$4'}
-          mt={'$4'}
-          $platform-web={{ width: '60%' }}
-          $sm={{ width: '80%' }}
-          py={'$3'}
-          elevate
-        >
-          <XStack jc={'space-between'} px="$5">
-            <YStack jc={'center'}>
-              <Paragraph size={'$1'} color={'$gray10Light'}>
-                lat {lat}
-              </Paragraph>
-              <Paragraph>{name}</Paragraph>
-              <Paragraph size={'$1'} color={'$gray10Light'}>
-                long {long}
-              </Paragraph>
-            </YStack>
-            <Dialog.Trigger asChild>
-              <YStack
-                onPress={() => {}}
-                jc={'center'}
-                animation="bouncy"
-                hoverStyle={{
-                  scale: 1.3,
-                }}
-                cursor="pointer"
-                pressStyle={{
-                  scale: 0.9,
-                }}
-              >
-                <Edit3 />
-              </YStack>
-            </Dialog.Trigger>
-          </XStack>
-        </Card>
-      </XStack>
-
-      <Adapt when="sm" platform="touch">
-        <Sheet animation="medium" zIndex={200000} modal dismissOnSnapToBottom>
-          <Sheet.Frame padding="$4" gap="$4">
-            <Adapt.Contents />
-          </Sheet.Frame>
-          <Sheet.Overlay animation="lazy" enterStyle={{ opacity: 0 }} exitStyle={{ opacity: 0 }} />
-        </Sheet>
-      </Adapt>
-
-      <Dialog.Portal>
-        <Dialog.Overlay
-          key="overlay"
-          animation="slow"
-          opacity={0.5}
-          enterStyle={{ opacity: 0 }}
-          exitStyle={{ opacity: 0 }}
-        />
-
-        <Dialog.Content
-          bordered
-          elevate
-          key="content"
-          animateOnly={['transform', 'opacity']}
-          animation={[
-            'quick',
-            {
-              opacity: {
-                overshootClamping: true,
-              },
-            },
-          ]}
-          enterStyle={{ x: 0, y: -20, opacity: 0, scale: 0.9 }}
-          exitStyle={{ x: 0, y: 10, opacity: 0, scale: 0.95 }}
-          gap="$4"
-        >
-          <Dialog.Title>Rename Location</Dialog.Title>
-
-          <Fieldset gap="$4" horizontal>
-            <Label width={160} justifyContent="flex-end" htmlFor="name">
-              Name
-            </Label>
-            <Input
-              flex={1}
-              value={newName}
-              onChangeText={setNewName}
-              id={index.toString()}
-              defaultValue={name}
+            onPress={Delete}
+          >
+            <MinusCircle
+              color={'red'}
+              jc={'center'}
+              animation="bouncy"
+              hoverStyle={{
+                scale: 1.1,
+              }}
+              pressStyle={{
+                scale: 0.9,
+              }}
             />
-          </Fieldset>
+          </YStack>
+          <Card
+            jc={'center'}
+            size={'$4'}
+            mt={'$4'}
+            $platform-web={{ width: '60%' }}
+            $sm={{ width: '80%' }}
+            py={'$3'}
+            elevate
+          >
+            <XStack jc={'space-between'} px="$5">
+              <YStack jc={'center'}>
+                <Paragraph size={'$1'} color={'$gray10Light'}>
+                  lat {lat}
+                </Paragraph>
+                <Paragraph>{name}</Paragraph>
+                <Paragraph size={'$1'} color={'$gray10Light'}>
+                  long {long}
+                </Paragraph>
+              </YStack>
+              <Dialog.Trigger asChild>
+                <YStack
+                  onPress={() => {}}
+                  jc={'center'}
+                  animation="bouncy"
+                  hoverStyle={{
+                    scale: 1.3,
+                  }}
+                  cursor="pointer"
+                  pressStyle={{
+                    scale: 0.9,
+                  }}
+                >
+                  <Edit3 />
+                </YStack>
+              </Dialog.Trigger>
+            </XStack>
+          </Card>
+        </XStack>
 
-          <XStack alignSelf="flex-end" gap="$4">
-            <Dialog.Close displayWhenAdapted asChild>
-              <Button theme="active" aria-label="Close" onPress={Edit}>
-                Save changes
-              </Button>
-            </Dialog.Close>
-          </XStack>
+        <Adapt when="sm" platform="touch">
+          <Sheet animation="medium" zIndex={200000} modal dismissOnSnapToBottom>
+            <Sheet.Frame padding="$4" gap="$4">
+              <Adapt.Contents />
+            </Sheet.Frame>
+            <Sheet.Overlay
+              animation="lazy"
+              enterStyle={{ opacity: 0 }}
+              exitStyle={{ opacity: 0 }}
+            />
+          </Sheet>
+        </Adapt>
 
-          <Unspaced>
-            <Dialog.Close asChild>
-              <Button position="absolute" top="$3" right="$3" size="$2" circular icon={X} />
-            </Dialog.Close>
-          </Unspaced>
-        </Dialog.Content>
-      </Dialog.Portal>
-    </Dialog>
+        <Dialog.Portal>
+          <Dialog.Overlay
+            key="overlay"
+            animation="slow"
+            opacity={0.5}
+            enterStyle={{ opacity: 0 }}
+            exitStyle={{ opacity: 0 }}
+          />
+
+          <Dialog.Content
+            bordered
+            elevate
+            key="content"
+            animateOnly={['transform', 'opacity']}
+            animation={[
+              'quick',
+              {
+                opacity: {
+                  overshootClamping: true,
+                },
+              },
+            ]}
+            enterStyle={{ x: 0, y: -20, opacity: 0, scale: 0.9 }}
+            exitStyle={{ x: 0, y: 10, opacity: 0, scale: 0.95 }}
+            gap="$4"
+          >
+            <Dialog.Title>Rename Location</Dialog.Title>
+
+            <Fieldset gap="$4" horizontal>
+              <Label width={160} justifyContent="flex-end" htmlFor="name">
+                Name
+              </Label>
+              <Input
+                flex={1}
+                value={newName}
+                onChangeText={setNewName}
+                // id={index.toString()}
+                defaultValue={name}
+              />
+            </Fieldset>
+
+            <XStack alignSelf="flex-end" gap="$4">
+              <Dialog.Close displayWhenAdapted asChild>
+                <Button theme="active" aria-label="Close" onPress={Edit}>
+                  Save changes
+                </Button>
+              </Dialog.Close>
+            </XStack>
+
+            <Unspaced>
+              <Dialog.Close asChild>
+                <Button position="absolute" top="$3" right="$3" size="$2" circular icon={X} />
+              </Dialog.Close>
+            </Unspaced>
+          </Dialog.Content>
+        </Dialog.Portal>
+      </Dialog>
+    </View>
   )
 }

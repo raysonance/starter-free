@@ -48,7 +48,7 @@ export function HomeScreen() {
       message: 'Location has been saved...',
     })
   }
-  console.log(coordinates)
+ 
   const renderItem = ({ item, index }: renderProps) => {
     return <DialogDemo daily={item} />
   }

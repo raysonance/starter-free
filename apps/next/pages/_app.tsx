@@ -20,7 +20,6 @@ function MyApp({ Component, pageProps }: SolitoAppProps) {
 
     if (isWindowAvailable) {
       initializeStorage()
-      console.log('feather')
     }
   }, [])
 

@@ -13,7 +13,7 @@ export function formatDate(dateString: string | undefined, daily?: string): stri
 type Props = { weather?: WeatherData['forecast']['forecastday'][0] | undefined }
 export function WeatherModal(props: Props) {
   const { weather } = props
-  console.log(weather?.day.avgtemp_c, 'lll')
+
   return (
     <YStack>
       <Card
