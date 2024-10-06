@@ -8,7 +8,6 @@ export default function Privacy() {
     <>
       <Head>
         <title>Privacy Policy - JAMB CBT Practice: Kintergon</title>
-        <Navbar />
         <style>
           {`
         body {
