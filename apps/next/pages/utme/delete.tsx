@@ -53,7 +53,7 @@ export default function Delete() {
       <Head>
         <title>Delete Your Account</title>
       </Head>
-      <h2>Steps to Delete Your Account</h2>
+      <h2>Steps to Delete Your Account in Jamb 2025</h2>
 
       <ol>
         <li>
@@ -88,8 +88,8 @@ export default function Delete() {
         <div>
           <strong>Confirmation</strong>
           <br />
-          Once we receive your request, we will process it and confirm the deletion of your account
-          via email. Please allow up to 5 business days for the process to be completed.
+          Once we receive your request, we will confirm the deletion of your account
+          via email.
         </div>
       </ol>
     </>
