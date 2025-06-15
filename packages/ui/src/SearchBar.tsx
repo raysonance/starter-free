@@ -78,7 +78,7 @@ export const SearchBar = ({ cityHandler, regionHandler }) => {
         </View>
       )}
       requestUrl={{
-        url: 'https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api',
+        url: 'https://starter-free-next.vercel.app/https://maps.googleapis.com/maps/api',
         useOnPlatform: 'web',
 
         headers: {
