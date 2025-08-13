@@ -1,3 +1,4 @@
+
 import Head from 'next/head'
 
 export default function Privacy() {
@@ -55,15 +56,15 @@ export default function Privacy() {
         <div>
           <div>
             <div>
-              <h1>Privacy Policy for Jamb 2025</h1>
+              <h1>Privacy Policy for JAMB CBT Past Questions 2026</h1>
               <div>Introduction</div>
               <div>
                 {' '}
-                Thank you for choosing to be part of our community at Jamb 2025 (“Company”, “we”,
-                “us”, or “our”). We are committed to protecting your personal information and your
-                right to privacy. If you have any questions or concerns about our policy or our
-                practices with regards to your personal information, please contact us at
-                kintergon@gmail.com.{' '}
+                Thank you for choosing to be part of our community at JAMB CBT Past Questions 2026
+                (“Company”, “we”, “us”, or “our”). We are committed to protecting your personal
+                information and your right to privacy. If you have any questions or concerns about
+                our policy or our practices with regards to your personal information, please
+                contact us at kintergon@gmail.com.{' '}
               </div>
               <div>
                 {' '}
